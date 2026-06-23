@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- icon: abstract network node -->
+  <g transform="translate(40,60)">
+    <circle cx="0" cy="0" r="6" fill="url(#g)"/>
+    <circle cx="-20" cy="-18" r="4" fill="url(#g)" opacity=".7"/>
+    <circle cx="20" cy="-18" r="4" fill="url(#g)" opacity=".7"/>
+    <circle cx="-20" cy="18" r="4" fill="url(#g)" opacity=".5"/>
+    <circle cx="20" cy="18" r="4" fill="url(#g)" opacity=".5"/>
+    <line x1="0" y1="0" x2="-20" y2="-18" stroke="url(#g)" stroke-width="1.5" opacity=".5"/>
+    <line x1="0" y1="0" x2="20" y2="-18" stroke="url(#g)" stroke-width="1.5" opacity=".5"/>
+    <line x1="0" y1="0" x2="-20" y2="18" stroke="url(#g)" stroke-width="1.5" opacity=".3"/>
+    <line x1="0" y1="0" x2="20" y2="18" stroke="url(#g)" stroke-width="1.5" opacity=".3"/>
+  </g>
+
+  <!-- text: vynx_http -->
+  <text x="85" y="72" font-family="'SF Mono','Fira Code','JetBrains Mono',monospace" font-size="48" font-weight="700" letter-spacing="-2">
+    <tspan fill="url(#g)">vynx</tspan><tspan fill="#94a3b8" font-weight="300">_http</tspan>
+  </text>
+</svg>

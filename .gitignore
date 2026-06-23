@@ -1,0 +1,32 @@
+# Build
+build/
+cmake-build-*/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiled
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# Test output
+Testing/
+
+# OpenSSL downloaded
+third_party/openssl-mingw/
+third_party/openssl-mingw.zip

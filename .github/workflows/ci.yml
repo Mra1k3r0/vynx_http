@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Linux (GCC)
+            cmake_flags: ""
+          - os: ubuntu-latest
+            name: Linux (Clang)
+            cmake_flags: "-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++"
+          - os: macos-latest
+            name: macOS (Apple Clang)
+            cmake_flags: "-DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3"
+
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install OpenSSL (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev
+
+      - name: Install OpenSSL (macOS)
+        if: runner.os == 'macOS'
+        run: brew install openssl@3
+
+      - name: Configure
+        run: cmake -B build ${{ matrix.cmake_flags }} -DVYNX_HTTP_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --build-config Release
+
+  build-windows:
+    runs-on: windows-latest
+    name: Windows (MinGW/MSYS2)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          path-type: inherit
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-openssl
+
+      - name: Configure
+        shell: msys2 {0}
+        run: cmake -B build -G "MinGW Makefiles" -DVYNX_HTTP_BUILD_TESTS=ON
+
+      - name: Build
+        shell: msys2 {0}
+        run: cmake --build build --config Release -j
+
+      - name: Test
+        shell: msys2 {0}
+        run: ctest --test-dir build --output-on-failure
